@@ -12,21 +12,20 @@ init_printing()
 #       RETURNS A LIST, use [0] if only expecting one solution
 #   -EXPONENTS: ** symbol, NOT ^.
 
-#val declarations
-DEBUG = false
-a,x,b,y,c,d = symbols('a x b y c d')
+def solve_subs(xyTotal, numX, numY, valTotal):
+    #var declarations
+    DEBUG = false
+    a,x,b,y,c,d = symbols('a x b y c d')
 
-expr_c = Eq(c, x + y)
-expr_y = Eq(y, c - x)
-expr_d = Eq(d, a*x + b*y)
-expr_dx = Eq(d, a*x + b*c - b*x)
-expr_dy = Eq(d, a*x + b*y)
-
-if __name__ == '__main__':
+    #equation declarations
+    expr_c = Eq(c, x + y)
+    expr_y = Eq(y, c - x)
+    expr_d = Eq(d, a*x + b*y)
+    expr_dx = Eq(d, a*x + b*c - b*x)
+    expr_dy = Eq(d, a*x + b*y)
 
     #step 1: get the equation to find y
     #           results: val d, equation for y
-    xyTotal = input('Input the sum of x and y: ')
     expr_y = expr_y.subs(c, xyTotal)
     print('y=')
     pprint(solve(expr_y,y))
@@ -34,9 +33,6 @@ if __name__ == '__main__':
 
     #step 2: get the total, and quantities
     #           results: vals a, b, d, eq d
-    numX = input('How many x?: ')
-    numY = input('How many y?: ')
-    valTotal = input('Totalling to...?: ')
     expr_d = expr_d.subs([(a, numX),(b,numY),(d,valTotal)])
     print('eq so far: ')
     pprint(expr_d)
@@ -61,3 +57,10 @@ if __name__ == '__main__':
 
     #step 5: solution
     print('SOLUTION: x='+str(newX)+',y='+str(newY))
+
+if __name__ == '__main__':
+    xyTotal = input('Input the sum of x and y: ')
+    numX = input('How many x?: ')
+    numY = input('How many y?: ')
+    valTotal = input('Totalling to...?: ')
+    solve_subs(xyTotal, numX, numY, valTotal)
